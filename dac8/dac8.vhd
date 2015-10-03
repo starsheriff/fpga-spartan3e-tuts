@@ -34,15 +34,25 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 entity dac8 is
     Port(
         clk : in STD_LOGIC;
-        level : in STD_LOGIC_VECTOR(7 downto 0);
-        stream_out : out STD_LOGIC
+        desired_level : in STD_LOGIC_VECTOR(7 downto 0);
+        stream_out : out STD_LOGIC;
+        led_out : out STD_LOGIC
     );
 end dac8;
 
 architecture Behavioral of dac8 is
-    signal ctr_9bit : STD_LOGIC_VECTOR(8 downto 0);
+    signal sum : STD_LOGIC_VECTOR(8 downto 0);
 begin
-
+    -- the 9th bit of the counter is used as output stream
+    stream_out <= sum(8);
+    led_out <= sum(8);
+    
+    process(clk, sum)
+    begin
+        if rising_edge(clk) then
+            sum <= ("0" & sum(7 downto 0)) + ("0" & desired_level);
+        end if;
+    end process;
 
 end Behavioral;
 

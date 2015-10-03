@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.10 secs
+Total CPU time to Xst completion: 0.11 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.10 secs
+Total CPU time to Xst completion: 0.11 secs
  
 --> 
 Reading design: dac8.prj
@@ -114,6 +114,8 @@ Entity <dac8> (Architecture <behavioral>) compiled.
 =========================================================================
 *                     Design Hierarchy Analysis                         *
 =========================================================================
+Analyzing hierarchy for entity <dac8> in library <work> (architecture <behavioral>).
+
 
 =========================================================================
 *                            HDL Analysis                               *
@@ -130,17 +132,23 @@ Performing bidirectional port resolution...
 
 Synthesizing Unit <dac8>.
     Related source file is "/home/jo/workspaces/fpga-spartan3e-tuts/dac8/dac8.vhd".
-WARNING:Xst:647 - Input <clk> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:647 - Input <level> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
-WARNING:Xst:1306 - Output <stream_out> is never assigned.
-WARNING:Xst:1780 - Signal <ctr_9bit> is never used or assigned. This unconnected signal will be trimmed during the optimization process.
+    Found 9-bit register for signal <sum>.
+    Found 9-bit adder for signal <sum$add0000> created at line 53.
+    Summary:
+	inferred   9 D-type flip-flop(s).
+	inferred   1 Adder/Subtractor(s).
 Unit <dac8> synthesized.
 
 
 =========================================================================
 HDL Synthesis Report
 
-Found no macro
+Macro Statistics
+# Adders/Subtractors                                   : 1
+ 9-bit adder                                           : 1
+# Registers                                            : 1
+ 9-bit register                                        : 1
+
 =========================================================================
 
 =========================================================================
@@ -151,7 +159,12 @@ Found no macro
 =========================================================================
 Advanced HDL Synthesis Report
 
-Found no macro
+Macro Statistics
+# Adders/Subtractors                                   : 1
+ 9-bit adder                                           : 1
+# Registers                                            : 9
+ Flip-Flops                                            : 9
+
 =========================================================================
 
 =========================================================================
@@ -169,7 +182,10 @@ Final Macro Processing ...
 =========================================================================
 Final Register Report
 
-Found no macro
+Macro Statistics
+# Registers                                            : 9
+ Flip-Flops                                            : 9
+
 =========================================================================
 
 =========================================================================
@@ -194,9 +210,21 @@ Optimization Goal                  : Speed
 Keep Hierarchy                     : No
 
 Design Statistics
-# IOs                              : 10
+# IOs                              : 11
 
 Cell Usage :
+# BELS                             : 25
+#      GND                         : 1
+#      LUT2                        : 8
+#      MUXCY                       : 8
+#      XORCY                       : 8
+# FlipFlops/Latches                : 9
+#      FD                          : 9
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 10
+#      IBUF                        : 8
+#      OBUF                        : 2
 =========================================================================
 
 Device utilization summary:
@@ -204,9 +232,12 @@ Device utilization summary:
 
 Selected Device : 3s250evq100-5 
 
- Number of Slices:                        0  out of   2448     0%  
- Number of IOs:                          10
- Number of bonded IOBs:                   0  out of     66     0%  
+ Number of Slices:                        5  out of   2448     0%  
+ Number of Slice Flip Flops:              9  out of   4896     0%  
+ Number of 4 input LUTs:                  8  out of   4896     0%  
+ Number of IOs:                          11
+ Number of bonded IOBs:                  11  out of     66    16%  
+ Number of GCLKs:                         1  out of     24     4%  
 
 ---------------------------
 Partition Resource Summary:
@@ -226,7 +257,11 @@ NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
 
 Clock Information:
 ------------------
-No clock signals found in this design
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | BUFGP                  | 9     |
+-----------------------------------+------------------------+-------+
 
 Asynchronous Control Signals Information:
 ----------------------------------------
@@ -236,9 +271,9 @@ Timing Summary:
 ---------------
 Speed Grade: -5
 
-   Minimum period: No path found
-   Minimum input arrival time before clock: No path found
-   Maximum output required time after clock: No path found
+   Minimum period: 3.232ns (Maximum Frequency: 309.406MHz)
+   Minimum input arrival time before clock: 3.907ns
+   Maximum output required time after clock: 4.063ns
    Maximum combinational path delay: No path found
 
 Timing Detail:
@@ -246,17 +281,94 @@ Timing Detail:
 All values displayed in nanoseconds (ns)
 
 =========================================================================
+Timing constraint: Default period analysis for Clock 'clk'
+  Clock period: 3.232ns (frequency: 309.406MHz)
+  Total number of paths / destination ports: 80 / 9
+-------------------------------------------------------------------------
+Delay:               3.232ns (Levels of Logic = 9)
+  Source:            sum_0 (FF)
+  Destination:       sum_7 (FF)
+  Source Clock:      clk rising
+  Destination Clock: clk rising
+
+  Data Path: sum_0 to sum_7
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q               1   0.514   0.426  sum_0 (sum_0)
+     LUT2:I1->O            1   0.612   0.000  Madd_sum_add0000_lut<0> (Madd_sum_add0000_lut<0>)
+     MUXCY:S->O            1   0.404   0.000  Madd_sum_add0000_cy<0> (Madd_sum_add0000_cy<0>)
+     MUXCY:CI->O           1   0.051   0.000  Madd_sum_add0000_cy<1> (Madd_sum_add0000_cy<1>)
+     MUXCY:CI->O           1   0.051   0.000  Madd_sum_add0000_cy<2> (Madd_sum_add0000_cy<2>)
+     MUXCY:CI->O           1   0.051   0.000  Madd_sum_add0000_cy<3> (Madd_sum_add0000_cy<3>)
+     MUXCY:CI->O           1   0.051   0.000  Madd_sum_add0000_cy<4> (Madd_sum_add0000_cy<4>)
+     MUXCY:CI->O           1   0.051   0.000  Madd_sum_add0000_cy<5> (Madd_sum_add0000_cy<5>)
+     MUXCY:CI->O           1   0.051   0.000  Madd_sum_add0000_cy<6> (Madd_sum_add0000_cy<6>)
+     XORCY:CI->O           1   0.699   0.000  Madd_sum_add0000_xor<7> (sum_add0000<7>)
+     FD:D                      0.268          sum_7
+    ----------------------------------------
+    Total                      3.232ns (2.806ns logic, 0.426ns route)
+                                       (86.8% logic, 13.2% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
+  Total number of paths / destination ports: 44 / 9
+-------------------------------------------------------------------------
+Offset:              3.907ns (Levels of Logic = 10)
+  Source:            desired_level<0> (PAD)
+  Destination:       sum_7 (FF)
+  Destination Clock: clk rising
+
+  Data Path: desired_level<0> to sum_7
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             1   1.106   0.509  desired_level_0_IBUF (desired_level_0_IBUF)
+     LUT2:I0->O            1   0.612   0.000  Madd_sum_add0000_lut<0> (Madd_sum_add0000_lut<0>)
+     MUXCY:S->O            1   0.404   0.000  Madd_sum_add0000_cy<0> (Madd_sum_add0000_cy<0>)
+     MUXCY:CI->O           1   0.051   0.000  Madd_sum_add0000_cy<1> (Madd_sum_add0000_cy<1>)
+     MUXCY:CI->O           1   0.051   0.000  Madd_sum_add0000_cy<2> (Madd_sum_add0000_cy<2>)
+     MUXCY:CI->O           1   0.051   0.000  Madd_sum_add0000_cy<3> (Madd_sum_add0000_cy<3>)
+     MUXCY:CI->O           1   0.051   0.000  Madd_sum_add0000_cy<4> (Madd_sum_add0000_cy<4>)
+     MUXCY:CI->O           1   0.051   0.000  Madd_sum_add0000_cy<5> (Madd_sum_add0000_cy<5>)
+     MUXCY:CI->O           1   0.051   0.000  Madd_sum_add0000_cy<6> (Madd_sum_add0000_cy<6>)
+     XORCY:CI->O           1   0.699   0.000  Madd_sum_add0000_xor<7> (sum_add0000<7>)
+     FD:D                      0.268          sum_7
+    ----------------------------------------
+    Total                      3.907ns (3.398ns logic, 0.509ns route)
+                                       (87.0% logic, 13.0% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
+  Total number of paths / destination ports: 2 / 2
+-------------------------------------------------------------------------
+Offset:              4.063ns (Levels of Logic = 1)
+  Source:            sum_8 (FF)
+  Destination:       stream_out (PAD)
+  Source Clock:      clk rising
+
+  Data Path: sum_8 to stream_out
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q               2   0.514   0.380  sum_8 (sum_8)
+     OBUF:I->O                 3.169          stream_out_OBUF (stream_out)
+    ----------------------------------------
+    Total                      4.063ns (3.683ns logic, 0.380ns route)
+                                       (90.6% logic, 9.4% route)
+
+=========================================================================
 
 
 Total REAL time to Xst completion: 8.00 secs
-Total CPU time to Xst completion: 8.06 secs
+Total CPU time to Xst completion: 8.34 secs
  
 --> 
 
 
-Total memory usage is 613340 kilobytes
+Total memory usage is 613736 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    4 (   0 filtered)
+Number of warnings :    0 (   0 filtered)
 Number of infos    :    0 (   0 filtered)
 

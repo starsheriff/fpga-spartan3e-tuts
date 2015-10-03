@@ -1,0 +1,15 @@
+# output to audio jack and one LED
+NET "stream_out" LOC = "P41";
+
+NET "clk" LOC = "P89" | IOSTANDARD = LVCMOS25;
+NET "led_out" LOC = "P17" | IOSTANDARD=LVTTL;
+
+# level given by switches
+NET desired_level(7) LOC = "P91" | IOSTANDARD=LVTTL;
+NET desired_level(6) LOC = "P92" | IOSTANDARD=LVTTL;
+NET desired_level(5) LOC = "P94" | IOSTANDARD=LVTTL;
+NET desired_level(4) LOC = "P95" | IOSTANDARD=LVTTL;
+NET desired_level(3) LOC = "P98" | IOSTANDARD=LVTTL;
+NET desired_level(2) LOC = "P2" | IOSTANDARD=LVTTL;
+NET desired_level(1) LOC = "P3" | IOSTANDARD=LVTTL;
+NET desired_level(0) LOC = "P4" | IOSTANDARD=LVTTL;
