@@ -1,0 +1,8 @@
+INTSTYLE=ise
+INFILE=/home/jo/workspaces/fpga-spartan3e-tuts/fsm_not_debounced/main.ncd
+OUTFILE=/home/jo/workspaces/fpga-spartan3e-tuts/fsm_not_debounced/main.bit
+FAMILY=Spartan3E
+PART=xc3s250e-5vq100
+WORKINGDIR=/home/jo/workspaces/fpga-spartan3e-tuts/fsm_not_debounced
+LICENSE=WebPack
+USER_INFO=211096387_0_0_751

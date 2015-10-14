@@ -1,0 +1,8 @@
+V3 3
+FL /home/jo/workspaces/fpga-spartan3e-tuts/fsm_not_debounced/main.vhd 2015/10/14.21:58:02 P.20131013
+EN work/main 1444852695 \
+      FL /home/jo/workspaces/fpga-spartan3e-tuts/fsm_not_debounced/main.vhd \
+      PB ieee/std_logic_1164 1381692176
+AR work/main/Behavioral 1444852696 \
+      FL /home/jo/workspaces/fpga-spartan3e-tuts/fsm_not_debounced/main.vhd \
+      EN work/main 1444852695
